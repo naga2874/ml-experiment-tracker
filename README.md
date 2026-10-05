@@ -1,54 +1,28 @@
-# Mini Experiment Tracker
+# ML Experiment Tracker
 
-A tiny version of tools like MLflow / Weights & Biases. It's a "notebook"
-for your machine learning experiments: it remembers what settings you
-tried, what results you got, and lets you compare experiments in a
-web dashboard.
+A lightweight MLflow-style tool to log, compare and analyze machine learning
+experiments, with an LLM assistant that suggests what to try next.
 
-## How it works (in plain English)
+![Dashboard](screenshot.png)
 
-- `tracker/db.py` — the notebook itself (a SQLite database file). Knows
-  how to save and read experiment data.
-- `tracker/__init__.py` — a friendly assistant you actually talk to in
-  your training code (`tracker.log_metric(...)` etc). It remembers which
-  experiment is "currently running" so you don't have to.
-- `example_train.py` — a toy example that trains a model 3 different ways
-  and logs everything using the tracker.
-- `dashboard.py` — a website (built with Streamlit) that reads the
-  notebook and shows you tables and charts.
+## Features
+- Log parameters, metrics and artifacts from any training script
+- SQLite storage, no setup needed
+- Streamlit dashboard to compare runs and plot any metric
+- AI assistant (Gemini API) that analyzes runs and recommends next experiments
 
-## How to run it
+## How to run
+1. Install: `pip install -r requirements.txt`
+2. Create sample runs: `python example_train.py`
+3. Set your free Gemini key (from aistudio.google.com): `set GEMINI_API_KEY=your_key`
+4. Start the dashboard: `streamlit run dashboard.py`
 
-```bash
-pip install -r requirements.txt
-
-# Run some experiments (creates experiments.db automatically)
-python example_train.py
-
-# View the results in your browser
-streamlit run dashboard.py
-```
-
-## How to use it in YOUR OWN training script
-
-```python
+## Use it in your own training code
 import tracker
 
 with tracker.start_run(name="my_experiment"):
-    tracker.log_param("learning_rate", 0.001)
+    tracker.log_param("learning_rate", 0.01)
+    tracker.log_metric("accuracy", 0.92, step=1)
 
-    for step in range(10):
-        loss = train_one_step()  # your own training code
-        tracker.log_metric("loss", loss, step=step)
-
-    tracker.log_artifact("my_model.pt")
-```
-
-That's it — every run gets automatically saved and shows up in the dashboard.
-
-## What's next (ideas to extend this)
-
-- Add support for saving images/plots as artifacts, not just models
-- Add a "delete run" button in the dashboard
-- Add tags/filters so you can search runs by name
-- Move from SQLite to Postgres if multiple people need to share one tracker
+## Tech stack
+Python, SQLite, Pandas, Streamlit, Google Gemini API
