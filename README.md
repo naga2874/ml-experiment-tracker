@@ -3,7 +3,7 @@
 A lightweight MLflow-style tool to log, compare and analyze machine learning
 experiments, with an LLM assistant that suggests what to try next.
 
-![Dashboard](screenshot.png)
+<img width="752" height="627" alt="image" src="https://github.com/user-attachments/assets/8a5118ea-9cc5-474c-8f50-ccd4fe8bcceb" />
 
 ## Features
 - Log parameters, metrics and artifacts from any training script
