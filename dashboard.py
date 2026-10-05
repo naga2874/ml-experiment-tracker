@@ -60,3 +60,22 @@ if selected_ids:
         st.line_chart(pd.DataFrame(all_metrics[chosen]))
     else:
         st.write("No metrics logged for the selected run(s).")
+
+# --- AI Assistant ---
+st.subheader("🤖 AI Assistant")
+if selected_ids:
+    from ai_insights import build_summary, ask_ai
+
+    question = st.text_input(
+        "Ask about the selected runs",
+        value="Which run is best and what should I try next?",
+    )
+    if st.button("Ask AI"):
+        with st.spinner("Thinking..."):
+            try:
+                answer = ask_ai(build_summary(selected_ids, names), question)
+                st.write(answer)
+            except Exception as e:
+                st.error(f"AI error: {e}")
+else:
+    st.info("Pick at least one run above first.")
