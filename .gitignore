@@ -2,3 +2,5 @@
 artifacts/
 __pycache__/
 *.pyc
+experiments.db
+ml-experiment-tracker/

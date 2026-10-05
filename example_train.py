@@ -31,7 +31,7 @@ settings_to_try = [
     {"n_estimators": 10, "max_depth": 2},
     {"n_estimators": 50, "max_depth": 4},
     {"n_estimators": 100, "max_depth": None},
-    {"n_estimators": 200, "max_depth": 6},
+    {"n_estimators": 200, "max_depth": 6}
 ]
 
 os.makedirs("artifacts", exist_ok=True)

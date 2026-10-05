@@ -1,16 +1,9 @@
-"""
-dashboard.py
-------------
-Run it with:
-
-    streamlit run dashboard.py
-"""
-
 import streamlit as st
 import pandas as pd
 from tracker import db
 
 st.set_page_config(page_title="My Experiment Tracker", layout="wide")
+
 st.title("🧪 My Experiment Tracker")
 st.caption("Every experiment you've ever run, all in one place.")
 
@@ -21,15 +14,16 @@ if not runs:
     st.info("No experiments yet! Run `python example_train.py` first.")
     st.stop()
 
-# --- Table of all runs ---
+# Table of all runs
 runs_df = pd.DataFrame(runs, columns=["run_id", "name", "created_at", "status"])
 runs_df["created_at"] = pd.to_datetime(runs_df["created_at"], unit="s")
 
 st.subheader("All experiments")
 st.dataframe(runs_df, use_container_width=True)
 
-# --- Compare runs ---
+# Compare runs
 st.subheader("Compare experiments")
+
 names = dict(zip(runs_df["run_id"], runs_df["name"]))
 
 selected_ids = st.multiselect(
